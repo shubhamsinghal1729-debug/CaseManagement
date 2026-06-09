@@ -1,0 +1,36 @@
+<template>
+
+    <c-s-c_-dashboard-cards
+        metrics={dashboardMetrics}>
+    </c-s-c_-dashboard-cards>
+
+    <c-s-c_-case-filters
+        onfilterchange={handleFilterChange}>
+    </c-s-c_-case-filters>
+
+    <lightning-tabset>
+
+        <lightning-tab label="All Cases">
+
+        </lightning-tab>
+
+        <lightning-tab label="Assigned To Me">
+
+        </lightning-tab>
+
+        <lightning-tab label="My In Progress">
+
+        </lightning-tab>
+
+    </lightning-tabset>
+
+    <c-s-c_-case-table
+        cases={cases}
+        onrowselection={handleSelection}
+    >
+    </c-s-c_-case-table>
+
+    <lightning-button label="Previous" onclick={handlePrevious}></lightning-button>
+    <lightning-button label="Next" onclick={handleNext}></lightning-button>
+
+</template>
