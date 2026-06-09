@@ -1,0 +1,18 @@
+<template>
+
+    <lightning-card title="All Cases">
+
+        <lightning-datatable
+            key-field="Id"
+            data={cases}
+            columns={columns}
+            sorted-by={sortedBy}
+            sorted-direction={sortDirection}
+            onsort={handleSort}
+            onrowaction={handleRowAction}
+            onrowselection={handleRowSelection}>
+        </lightning-datatable>
+
+    </lightning-card>
+
+</template>
