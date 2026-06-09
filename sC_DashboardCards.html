@@ -1,0 +1,79 @@
+<template>
+    <div class="slds-grid slds-wrap slds-gutters">
+
+        <template if:true={metrics}>
+
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-card>
+                    <div class="metric-card">
+                        <div class="metric-label">Total Cases</div>
+                        <div class="metric-value">
+                            {metrics.totalCases}
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-card>
+                    <div class="metric-card">
+                        <div class="metric-label">In Progress</div>
+                        <div class="metric-value">
+                            {metrics.inProgressCases}
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-card>
+                    <div class="metric-card">
+                        <div class="metric-label">New Today</div>
+                        <div class="metric-value">
+                            {metrics.newTodayCases}
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-card>
+                    <div class="metric-card">
+                        <div class="metric-label">Overdue SLA</div>
+                        <div class="metric-value overdue">
+                            {metrics.overdueCases}
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-card>
+                    <div class="metric-card">
+                        <div class="metric-label">
+                            Avg Response Time
+                        </div>
+                        <div class="metric-value">
+                            {metrics.avgResponseTime}
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-card>
+                    <div class="metric-card">
+                        <div class="metric-label">
+                            Resolution Rate
+                        </div>
+                        <div class="metric-value">
+                            {metrics.resolutionRate}%
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+        </template>
+
+    </div>
+</template>
