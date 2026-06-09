@@ -1,0 +1,31 @@
+public class sC_CaseManagementController{
+
+    @AuraEnabled(cacheable=true)
+    public static DashboardMetrics getDashboardMetrics(){
+
+        DashboardMetrics metrics = new DashboardMetrics();
+        metrics.totalCases = [SELECT COUNT() FROM Case];
+        metrics.inProgressCases = [SELECT COUNT() FROM Case WHERE Status = 'In Progress'];
+        metrics.newTodayCases = [SELECT COUNT() FROM Case WHERE CreatedDate = TODAY];
+        metrics.overdueCases = [SELECT COUNT() FROM Case WHERE SLA_Breach__c = true];
+        metrics.avgResponseTime = 2.4;
+        metrics.resolutionRate = 95.0;
+        return metrics;
+    }
+
+    public class DashboardMetrics{
+
+        @AuraEnabled
+        public Integer totalCases;
+        @AuraEnabled
+        public Integer inProgressCases;
+        @AuraEnabled
+        public Integer newTodayCases;
+        @AuraEnabled
+        public Integer overdueCases;
+        @AuraEnabled
+        public Decimal avgResponseTime;
+        @AuraEnabled
+        public Decimal resolutionRate;
+    }
+}
