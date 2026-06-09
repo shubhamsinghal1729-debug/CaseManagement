@@ -1,0 +1,141 @@
+<template>
+
+    <lightning-card title="Filters">
+
+        <div class="slds-p-around_medium">
+
+            <div class="slds-grid slds-wrap slds-gutters">
+
+                <!-- Assignment Group -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="Assignment Group"
+                        value={assignmentGroup}
+                        options={assignmentGroupOptions}
+                        onchange={handleAssignmentGroup}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Sub Group -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="Sub Group"
+                        value={subGroup}
+                        options={subGroupOptions}
+                        onchange={handleSubGroup}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Agent -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="Agent"
+                        value={agent}
+                        options={agentOptions}
+                        onchange={handleAgent}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Priority -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="Priority"
+                        value={priority}
+                        options={priorityOptions}
+                        onchange={handlePriority}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Status -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="Status"
+                        value={status}
+                        options={statusOptions}
+                        onchange={handleStatus}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Category -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="Category"
+                        value={category}
+                        options={categoryOptions}
+                        onchange={handleCategory}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Type -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="Type"
+                        value={type}
+                        options={typeOptions}
+                        onchange={handleType}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- SLA Risk -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        label="SLA Risk"
+                        value={slaRisk}
+                        options={slaRiskOptions}
+                        onchange={handleSlaRisk}>
+                    </lightning-combobox>
+                </div>
+
+                <!-- Search -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input
+                        type="search"
+                        label="Search Cases"
+                        value={searchText}
+                        onchange={handleSearch}>
+                    </lightning-input>
+                </div>
+
+                <!-- Start Date -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input
+                        type="date"
+                        label="Start Date"
+                        value={startDate}
+                        onchange={handleStartDate}>
+                    </lightning-input>
+                </div>
+
+                <!-- End Date -->
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input
+                        type="date"
+                        label="End Date"
+                        value={endDate}
+                        onchange={handleEndDate}>
+                    </lightning-input>
+                </div>
+
+            </div>
+
+            <div class="slds-m-top_medium">
+
+                <lightning-button
+                    variant="brand"
+                    label="Apply Filters"
+                    onclick={applyFilters}>
+                </lightning-button>
+
+                <lightning-button
+                    class="slds-m-left_small"
+                    label="Reset"
+                    onclick={resetFilters}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+
+    </lightning-card>
+
+</template>
