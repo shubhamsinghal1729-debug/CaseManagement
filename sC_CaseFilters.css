@@ -1,3 +1,44 @@
 .slds-card {
     border-radius: 6px;
 }
+
+Set<String> setofAG = new Set<String>();
+Map<String,List<String>> mapofASG = new Map<String,List<String>>();
+for(SC_QueueAssignmentSubGrpMap__c ASGObj : [Select Id,Name,Sc_Assignment_Group__c,Sc_Assignment_Sub_Group__c from SC_QueueAssignmentSubGrpMap__c]){
+    setofAG.add(ASGObj.Sc_Assignment_Group__c);
+	if(mapofASG.containsKey(ASGObj.Sc_Assignment_Sub_Group__c)){
+	   mapofASG.get(ASGObj.Sc_Assignment_Sub_Group__c).add(ASGObj.Sc_Assignment_Group__c);
+	}else{
+	   mapofASG.put(ASGObj.Sc_Assignment_Sub_Group__c,new List<String>());
+	   mapofASG.get(ASGObj.Sc_Assignment_Sub_Group__c).add(ASGObj.Sc_Assignment_Group__c);
+	}
+} 
+Map<String,Id> mapofGroupIds = new Map<String,Id>();
+for(Group GPObj : [Select Id,Name from Group where (Name IN: setofAG OR Name IN: mapofASG.keyset()) AND Type = 'Regular']){
+    mapofGroupIds.put(GPObj.Name,GPObj.Id);
+} 
+Map<String,List<String>> mapofGroupMember = new Map<String,List<String>>();
+for(GroupMember gm : [SELECT Id,Group.Name,GroupId,UserOrGroupId,UserOrGroup.Name FROM GroupMember WHERE Group.Name IN: setofAG AND Group.Type = 'Regular']){
+    if(mapofGroupMember.containsKey(gm.Group.Name)){
+	    mapofGroupMember.get(gm.Group.Name).add(gm.UserOrGroup.Name);
+	}else{
+		mapofGroupMember.put(gm.Group.Name,new List<String>());
+	    mapofGroupMember.get(gm.Group.Name).add(gm.UserOrGroup.Name);
+	}
+}
+List<GroupMember> listGM = new List<GroupMember>();
+for(String str : mapofASG.keyset()){
+    List<String> AGList = mapofASG.get(str);
+    for(String strAG : AGList){
+        if(mapofGroupMember.containsKey(strAG) && mapofGroupIds.containskey(strAG) && mapofGroupIds.containskey(str)){
+            if(!mapofGroupMember.get(strAG).contains(str)){
+                GroupMember gm = new GroupMember();
+                gm.GroupId = mapofGroupIds.get(strAG);
+                gm.UserOrGroupId = mapofGroupIds.get(str);
+                listGM.add(gm);
+            }
+        }
+    }
+}
+insert listGM;
+
