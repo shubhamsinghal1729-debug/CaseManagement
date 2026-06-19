@@ -1,36 +1,349 @@
 <template>
+    <div class="workspace-root-canvas">
+        
+        <div class="header-container bg-white">
+            <div class="header-content-inner slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-p-vertical_small">
+                
+                <div class="slds-col slds-grid slds-grid_vertical-align-center">
+                    <div class="custom-case-icon">
+                        <lightning-icon 
+                            icon-name="standard:case" 
+                            alternative-text="Cases" 
+                            title="Cases"
+                            size="medium">
+                        </lightning-icon>
+                    </div>
+                    <div class="title-text-stack">
+                        <p class="slds-text-body_small text-muted-small">Cases</p>
+                        <h1 class="slds-text-heading_medium slds-font-weight_bold text-header-title">Queue Management</h1>
+                    </div>
+                </div>
 
-    <c-s-c_-dashboard-cards
-        metrics={dashboardMetrics}>
-    </c-s-c_-dashboard-cards>
+                <div class="slds-col slds-grid slds-grid_vertical-align-center">
+                    <div class="slds-m-r_medium utility-button-group">
+                        <lightning-button-icon 
+                            icon-name="utility:table" 
+                            alternative-text="View Settings" 
+                            variant="border-filled"
+                            class="slds-m-r_xx-small">
+                        </lightning-button-icon>
+                        <lightning-button-icon 
+                            icon-name="utility:refresh" 
+                            alternative-text="Refresh List" 
+                            variant="border-filled" 
+                            onclick={handleRefresh}>
+                        </lightning-button-icon>
+                    </div>
 
-    <c-s-c_-case-filters
-        onfilterchange={handleFilterChange}>
-    </c-s-c_-case-filters>
+                    <div class="slds-button-group" role="group">
+                        <lightning-button label="Change Owner" onclick={handleChangeOwner} variant="neutral"></lightning-button>
+                        <lightning-button label="Assign Case" onclick={handleAssignCase} variant="neutral"></lightning-button>
+                        <lightning-button label="Update Conversion Status" onclick={handleUpdateStatus} variant="neutral"></lightning-button>
+                        <lightning-button label="Close Case" onclick={handleCloseCase} variant="neutral"></lightning-button>
+                        <lightning-button label="New Case" onclick={handleNewCase} variant="brand" icon-name="utility:add" class="slds-m-left_xx-small"></lightning-button>
+                    </div>
+                </div>
 
-    <lightning-tabset>
+            </div>
+        </div>
 
-        <lightning-tab label="All Cases">
+        <div class="metrics-outer-wrapper">
+            <div class="slds-grid slds-gutters metrics-grid">
+                
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="metric-card-container">
+                        <div class="metric-card-header slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon icon-name="utility:metrics" size="x-small" class="slds-m-r_xx-small metric-icon-fill"></lightning-icon>
+                            <span class="metric-title-text">Total Cases</span>
+                        </div>
+                        <div class="metric-inner-divider"></div>
+                        <div class="metric-card-body">
+                            <div class="metric-value-text">323</div>
+                            <div class="metric-footer-trend trend-up">
+                                <span class="trend-icon-arrow">↑</span> +12% <span class="trend-duration-text">vs last week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </lightning-tab>
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="metric-card-container">
+                        <div class="metric-card-header slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon icon-name="utility:clock" size="x-small" class="slds-m-r_xx-small metric-icon-fill"></lightning-icon>
+                            <span class="metric-title-text">In Progress</span>
+                        </div>
+                        <div class="metric-inner-divider"></div>
+                        <div class="metric-card-body">
+                            <div class="metric-value-text">127</div>
+                            <div class="metric-footer-trend trend-up">
+                                <span class="trend-icon-arrow">↑</span> +12% <span class="trend-duration-text">vs last week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <lightning-tab label="Assigned To Me">
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="metric-card-container">
+                        <div class="metric-card-header slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon icon-name="utility:record" size="x-small" class="slds-m-r_xx-small metric-icon-fill"></lightning-icon>
+                            <span class="metric-title-text">New Today</span>
+                        </div>
+                        <div class="metric-inner-divider"></div>
+                        <div class="metric-card-body">
+                            <div class="metric-value-text">34</div>
+                            <div class="metric-footer-trend trend-up">
+                                <span class="trend-icon-arrow">↑</span> +12% <span class="trend-duration-text">vs last week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </lightning-tab>
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="metric-card-container">
+                        <div class="metric-card-header slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon icon-name="utility:warning" size="x-small" class="slds-m-r_xx-small metric-icon-fill"></lightning-icon>
+                            <span class="metric-title-text">Overdue SLA</span>
+                        </div>
+                        <div class="metric-inner-divider"></div>
+                        <div class="metric-card-body">
+                            <div class="metric-value-text text-color-danger">18</div>
+                            <div class="metric-footer-trend trend-down">
+                                <span class="trend-icon-arrow">↓</span> -3% <span class="trend-duration-text">vs last week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <lightning-tab label="My In Progress">
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="metric-card-container">
+                        <div class="metric-card-header slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon icon-name="utility:chart" size="x-small" class="slds-m-r_xx-small metric-icon-fill"></lightning-icon>
+                            <span class="metric-title-text">Avg Response Time</span>
+                        </div>
+                        <div class="metric-inner-divider"></div>
+                        <div class="metric-card-body">
+                            <div class="metric-value-text">2.4h</div>
+                            <div class="metric-footer-trend trend-down">
+                                <span class="trend-icon-arrow">↓</span> -12% <span class="trend-duration-text">vs last week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </lightning-tab>
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="metric-card-container">
+                        <div class="metric-card-header slds-grid slds-grid_vertical-align-center">
+                            <lightning-icon icon-name="utility:activity" size="x-small" class="slds-m-r_xx-small metric-icon-fill"></lightning-icon>
+                            <span class="metric-title-text">Resolution Rate</span>
+                        </div>
+                        <div class="metric-inner-divider"></div>
+                        <div class="metric-card-body">
+                            <div class="metric-value-text">95%</div>
+                            <div class="metric-footer-trend trend-down">
+                                <span class="trend-icon-arrow">↓</span> -12% <span class="trend-duration-text">vs last week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    </lightning-tabset>
+            </div>
+            
+            <div class="section-blue-line"></div>
+        </div>
 
-    <c-s-c_-case-table
-        cases={cases}
-        onrowselection={handleSelection}
-    >
-    </c-s-c_-case-table>
+        <div class="main-split-content-frame slds-grid slds-wrap">
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12 workspace-sidebar-left">
+                
+                <div class="quick-find-wrapper slds-m-bottom_large">
+                    <lightning-input 
+                        type="search" 
+                        variant="label-hidden" 
+                        placeholder="Quick find..." 
+                        class="sidebar-search-input"
+                        onchange={handleSidebarSearch}>
+                    </lightning-input>
+                </div>
 
-    <lightning-button label="Previous" onclick={handlePrevious}></lightning-button>
-    <lightning-button label="Next" onclick={handleNext}></lightning-button>
+                <div class="sidebar-block slds-m-bottom_large">
+                    <div class="slds-grid slds-grid_vertical-align-center block-header slds-p-bottom_x-small">
+                        <lightning-icon icon-name="utility:favorite" size="xx-small" class="slds-m-r_xx-small sidebar-icon-orange"></lightning-icon>
+                        <span class="sidebar-block-title">Favourites Views</span>
+                    </div>
+                    
+                    <ul class="sidebar-list">
+                        <li class="sidebar-list-item active-list-item slds-grid slds-grid_align-spread">
+                            <span class="item-label">All Active Queues</span>
+                        </li>
+                        <li class="sidebar-list-item slds-grid slds-grid_align-spread">
+                            <span class="item-label">Critical SLA Breach</span>
+                        </li>
+                        <li class="sidebar-list-item slds-grid slds-grid_align-spread">
+                            <span class="item-label">My Starred Workgroups</span>
+                        </li>
+                    </ul>
+                </div>
 
+                <div class="sidebar-block">
+                    <div class="slds-grid slds-grid_vertical-align-center block-header slds-p-bottom_x-small">
+                        <lightning-icon icon-name="utility:bookmarks" size="xx-small" class="slds-m-r_xx-small sidebar-icon-blue"></lightning-icon>
+                        <span class="sidebar-block-title">My Saved Views</span>
+                    </div>
+
+                    <ul class="sidebar-list">
+                        <li class="sidebar-list-item slds-grid slds-grid_align-spread">
+                            <span class="item-label">Billing Exceptions Tier 1</span>
+                        </li>
+                        <li class="sidebar-list-item slds-grid slds-grid_align-spread">
+                            <span class="item-label">Tech Support Escalations</span>
+                        </li>
+                        <li class="sidebar-list-item slds-grid slds-grid_align-spread">
+                            <span class="item-label">UK Merchant Approvals</span>
+                        </li>
+                        <li class="sidebar-list-item slds-grid slds-grid_align-spread">
+                            <span class="item-label">Yesterday's Closed Loops</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12 workspace-main-container">
+                
+                <div class="slds-grid tab-navigation-bar slds-m-bottom_medium">
+                    <span class="navigation-tab custom-active-tab">All Cases</span>
+                    <span class="navigation-tab">Assigned to Me</span>
+                    <span class="navigation-tab">My In Progress</span>
+                    <span class="navigation-tab">Pending My Response</span>
+                    <span class="navigation-tab">Recently Touched</span>
+                </div>
+
+                <div class="filter-panel-card slds-m-bottom_medium">
+                    
+                    <div class="slds-m-bottom_medium inline-search-box-wrap">
+                        <lightning-input 
+                            type="search" 
+                            variant="label-hidden" 
+                            placeholder="Search cases by number, subject or customer..." 
+                            class="global-inner-search">
+                        </lightning-input>
+                    </div>
+
+                    <div class="slds-grid slds-grid_vertical-align-center filter-toggle-heading slds-m-bottom_small">
+                        <lightning-icon icon-name="utility:chevrondown" size="xx-small" class="slds-m-r_xx-small filter-chevron-icon"></lightning-icon>
+                        <span class="filter-heading-text">Filters</span>
+                    </div>
+
+                    <div class="slds-grid slds-gutters slds-m-bottom_small">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-combobox label="Assignment Group" placeholder="Select one or more assignment groups..."></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-combobox label="Sub-Group" placeholder="Select one or more sub groups..."></lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-m-bottom_medium">
+                        <lightning-button label="Add New Assignment Group" icon-name="utility:add" variant="base" class="custom-add-group-btn"></lightning-button>
+                    </div>
+
+                    <div class="slds-grid slds-gutters slds-m-bottom_small">
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox label="Priority" placeholder="Select one or more priorities..."></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox label="Status" placeholder="Select one or more statuses..."></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox label="Agents" placeholder="Select one or more agents..."></lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox label="Category" placeholder="Select one or more categories..."></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox label="Type" placeholder="Select one or more types..."></lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox label="SLA Risk" placeholder="Select one or more agents..."></lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center bottom-filter-actions">
+                        <div class="date-range-input-container">
+                            <lightning-input type="date" label="Date Range" placeholder="Select a date range..."></lightning-input>
+                        </div>
+                        <div class="toggle-switch-container">
+                            <lightning-input type="toggle" label="Unread Only" message-toggle-active="" message-toggle-inactive="" class="custom-inline-toggle"></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="datatable-frame-wrapper">
+                    <div class="datatable-section-title slds-m-bottom_medium">All Cases</div>
+                    
+                    <div class="slds-table_header-fixed_container custom-table-scroll-wrap">
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer custom-structured-table">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col" style="width: 3.25rem;"><div class="slds-truncate"><input type="checkbox"/></div></th>
+                                    <th scope="col"><div class="slds-truncate">Case Number <span class="sort-icon-indicator">↓</span></div></th>
+                                    <th scope="col"><div class="slds-truncate">Subject</div></th>
+                                    <th scope="col"><div class="slds-truncate">Status</div></th>
+                                    <th scope="col"><div class="slds-truncate">Priority</div></th>
+                                    <th scope="col"><div class="slds-truncate">Category</div></th>
+                                    <th scope="col"><div class="slds-truncate">Type</div></th>
+                                    <th scope="col"><div class="slds-truncate">Agent</div></th>
+                                    <th scope="col"><div class="slds-truncate">Assignment Group</div></th>
+                                    <th scope="col"><div class="slds-truncate">Sub-Group</div></th>
+                                    <th scope="col"><div class="slds-truncate">SLA Risk</div></th>
+                                    <th scope="col"><div class="slds-truncate">Date Opened</div></th>
+                                    <th scope="col" style="width: 3.25rem;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="slds-hint-parent">
+                                    <td><input type="checkbox"/></td>
+                                    <td><a href="javascript:void(0);" class="case-hyperlink-text">123450</a></td>
+                                    <td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td>
+                                    <td><span class="custom-status-label-badge">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td><span class="cell-standard-text">Label</span></td>
+                                    <td>
+                                        <lightning-button-icon icon-name="utility:down" variant="bare" alternative-text="Actions" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon>
+                                    </td>
+                                </tr>
+                                <tr class="slds-hint-parent"><td><input type="checkbox"/></td><td><a href="javascript:void(0);" class="case-hyperlink-text">123451</a></td><td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td><td><span class="custom-status-label-badge">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><lightning-button-icon icon-name="utility:down" variant="bare" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon></td></tr>
+                                <tr class="slds-hint-parent"><td><input type="checkbox"/></td><td><a href="javascript:void(0);" class="case-hyperlink-text">123452</a></td><td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td><td><span class="custom-status-label-badge">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><lightning-button-icon icon-name="utility:down" variant="bare" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon></td></tr>
+                                <tr class="slds-hint-parent"><td><input type="checkbox"/></td><td><a href="javascript:void(0);" class="case-hyperlink-text">123453</a></td><td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td><td><span class="custom-status-label-badge">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><lightning-button-icon icon-name="utility:down" variant="bare" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center custom-table-pagination-footer slds-p-vertical_small">
+                        <div class="results-counter-txt">Showing 1-10 out of 323</div>
+                        <div class="slds-grid pagination-numeric-cluster">
+                            <span class="page-step-action-text text-disabled-nav">Previous</span>
+                            <span class="num-block current-active-num">1</span>
+                            <span class="num-block">2</span>
+                            <span class="num-block">3</span>
+                            <span class="num-block">4</span>
+                            <span class="num-block">5</span>
+                            <span class="ellipsis-separator">...</span>
+                            <span class="num-block">33</span>
+                            <span class="page-step-action-text text-active-nav">Next</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
