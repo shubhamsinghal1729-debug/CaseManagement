@@ -1,0 +1,450 @@
+/* Master root component block to explicitly force a white baseline canvas */
+.workspace-root-canvas {
+    background-color: #ffffff !important;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Core Structural Layout Split Frame Grid Configuration */
+.main-split-content-frame {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    background-color: #ffffff;
+}
+
+/* ==================== LEFT SIDEBAR STYLES ==================== */
+.workspace-sidebar-left {
+    background-color: #ffffff;
+    border-right: 1px solid #dddbda;
+    padding-left: 24px;   
+    padding-right: 20px;
+    min-height: 480px;
+}
+
+/* Quick Find custom wrapper container */
+.quick-find-wrapper {
+    width: 100%;
+}
+
+.sidebar-search-input {
+    --slds-c-input-color-background: #f3f3f3;
+    --slds-c-input-radius-border: 4px;
+    font-size: 0.78rem;
+}
+
+.sidebar-block {
+    display: block;
+}
+
+.block-header {
+    border-bottom: 1px solid #dddbda;
+    margin-bottom: 10px;
+}
+
+.sidebar-block-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #161616;
+    text-transform: uppercase;
+    letter-spacing: 0.04rem;
+}
+
+.sidebar-icon-orange {
+    --slds-c-icon-color-foreground: #ff9a00;
+}
+
+.sidebar-icon-blue {
+    --slds-c-icon-color-foreground: #0176d3;
+}
+
+.sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-list-item {
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #444444;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.sidebar-list-item:hover {
+    background-color: #f3f3f3;
+    color: #0176d3;
+}
+
+.active-list-item {
+    background-color: #e0f2fe !important; 
+    color: #0176d3 !important;
+    font-weight: 600 !important;
+}
+
+/* ==================== WORKSPACE / METRICS / HEADER STYLES ==================== */
+.header-container {
+    border-top: none !important; 
+    border-bottom: 1px solid #dddbda; 
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.header-content-inner {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.custom-case-icon {
+    --slds-c-icon-color-background: #ea43b6; 
+    border-radius: .25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-text-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+}
+
+.text-muted-small {
+    color: #514f4d;
+    font-size: 0.75rem;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.text-header-title {
+    color: #181818;
+    line-height: 1.1;
+    font-size: 1.25rem;
+}
+
+.utility-button-group {
+    display: flex;
+    align-items: center;
+}
+
+/* Changed background-color from transparent to solid white */
+.metrics-outer-wrapper {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: #ffffff; 
+    width: 100%;
+}
+
+.metrics-grid {
+    margin: 0 !important;
+    width: 100% !important;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.metric-card-container {
+    background: #ffffff;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.metric-card-header {
+    padding: 10px 14px;
+    background-color: #f3f3f3;
+}
+
+.metric-title-text {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #2b303a;
+}
+
+.metric-icon-fill {
+    --slds-c-icon-color-foreground: #626262;
+}
+
+.metric-inner-divider {
+    border-bottom: 1px solid #c9c9c9;
+    width: 100%;
+}
+
+.metric-card-body {
+    padding: 12px 14px;
+    background-color: #ffffff;
+}
+
+.metric-value-text {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #161616;
+    line-height: 1.1;
+}
+
+.text-color-danger {
+    color: #ba0517;
+}
+
+.metric-footer-trend {
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.trend-up {
+    color: #2e844a;
+}
+
+.trend-down {
+    color: #ba0517;
+}
+
+.trend-icon-arrow {
+    margin-right: 2px;
+}
+
+.trend-duration-text {
+    color: #747474;
+    font-weight: normal;
+    margin-left: 3px;
+}
+
+.section-blue-line {
+    border-bottom: 2px solid #0176d3; 
+    width: 100%;
+    margin-top: 20px;
+}
+
+.workspace-main-container {
+    background-color: #ffffff;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.tab-navigation-bar {
+    border-bottom: 1px solid #c9c9c9;
+    width: 100%;
+    background: #ffffff;
+}
+
+.navigation-tab {
+    padding: 8px 16px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #444444;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+}
+
+.navigation-tab:hover {
+    color: #0176d3;
+}
+
+.custom-active-tab {
+    color: #0176d3 !important;
+    font-weight: 600 !important;
+    border-bottom-color: #0176d3 !important;
+}
+
+.filter-panel-card {
+    background-color: #f3f3f3; 
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    padding: 16px;
+}
+
+.inline-search-box-wrap {
+    width: 100%;
+}
+
+.global-inner-search {
+    --slds-c-input-color-background: #ffffff;
+    --slds-c-input-spacing-padding-left: 36px;
+}
+
+.filter-toggle-heading {
+    cursor: pointer;
+}
+
+.filter-chevron-icon {
+    --slds-c-icon-color-foreground: #2b303a;
+}
+
+.filter-heading-text {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #2b303a;
+}
+
+.filter-panel-card lightning-combobox {
+    --slds-c-input-color-background: #ffffff;
+    --slds-c-input-radius-border: 4px;
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.custom-add-group-btn {
+    font-size: 0.75rem;
+    --slds-c-button-text-color: #0176d3;
+    font-weight: 600;
+}
+
+.date-range-input-container {
+    width: 240px;
+}
+
+.date-range-input-container lightning-input {
+    --slds-c-input-color-background: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.custom-inline-toggle {
+    --slds-c-input-toggle-color-background-checked: #0176d3;
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.datatable-frame-wrapper {
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.datatable-section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #161616;
+}
+
+.custom-table-scroll-wrap {
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.custom-structured-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-structured-table thead th {
+    background-color: #f3f3f3 !important;
+    color: #444444 !important;
+    font-weight: 600 !important;
+    font-size: 0.76rem;
+    padding: 8px 10px;
+    border-bottom: 1px solid #dddbda;
+    white-space: nowrap;
+}
+
+.sort-icon-indicator {
+    display: inline-block;
+    margin-left: 2px;
+    color: #0176d3;
+    font-weight: bold;
+}
+
+.custom-structured-table tbody td {
+    padding: 8px 10px;
+    font-size: 0.76rem;
+    border-bottom: 1px solid #f3f3f3;
+    vertical-align: middle;
+}
+
+.case-hyperlink-text {
+    color: #0176d3;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.text-lorem-dimmed {
+    color: #747474;
+}
+
+.custom-status-label-badge {
+    background-color: #e0e0e0;
+    color: #3e3e3e;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.cell-standard-text {
+    color: #161616;
+}
+
+.table-row-dropdown-icon {
+    --slds-c-icon-color-foreground: #747474;
+    border: 1px solid #dddbda;
+    border-radius: 3px;
+    padding: 2px;
+    background: #ffffff;
+}
+
+.custom-table-pagination-footer {
+    border-top: none;
+    font-size: 0.74rem;
+}
+
+.results-counter-txt {
+    color: #747474;
+}
+
+.pagination-numeric-cluster {
+    display: flex;
+    align-items: center;
+}
+
+.page-step-action-text {
+    margin: 0 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.text-disabled-nav {
+    color: #c9c9c9;
+    cursor: not-allowed;
+}
+
+.text-active-nav {
+    color: #0176d3;
+}
+
+.num-block {
+    border: 1px solid #dddbda;
+    padding: 4px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+    background: #ffffff;
+    border-radius: 3px;
+    color: #444444;
+}
+
+.num-block:hover {
+    background: #f3f3f3;
+}
+
+.current-active-num {
+    background-color: #0176d3 !important;
+    color: #ffffff !important;
+    border-color: #0176d3 !important;
+    font-weight: 600;
+}
+
+.ellipsis-separator {
+    padding: 0 6px;
+    color: #747474;
+}
