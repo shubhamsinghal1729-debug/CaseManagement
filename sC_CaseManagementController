@@ -1,31 +1,119 @@
-public class sC_CaseManagementController{
+/**
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ * Class Name      : sC_CaseManagementController
+ * Author          : <YourName>
+ * Created Date    : Jun 9, 2026
+ * Last Modified By: <YourName>
+ * Last Modified On: Jun 9, 2026
+ * Description     : This class implements for......
+ *  
+ * Change History  :
+ *  Date          │   Author     │   Change
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ *  Jun 9, 2026  │ <YourName>   │ Initial version
+ * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+ */
+public with sharing class sC_CaseManagementController {
 
     @AuraEnabled(cacheable=true)
     public static DashboardMetrics getDashboardMetrics(){
-
         DashboardMetrics metrics = new DashboardMetrics();
-        metrics.totalCases = [SELECT COUNT() FROM Case];
-        metrics.inProgressCases = [SELECT COUNT() FROM Case WHERE Status = 'In Progress'];
-        metrics.newTodayCases = [SELECT COUNT() FROM Case WHERE CreatedDate = TODAY];
-        metrics.overdueCases = [SELECT COUNT() FROM Case WHERE SLA_Breach__c = true];
+        metrics.totalCases = 0;
+        metrics.inProgressCases = 0;
+        metrics.newTodayCases = 0;
+        metrics.overdueCases = 0;
+        for(Case caseObj : [Select Id,CreatedDate,Status,Email_Received__c from Case]){
+            metrics.totalCases += 1;
+            if(caseObj.Status == 'In Progress'){
+                metrics.inProgressCases += 1;
+            }
+            if(caseObj.CreatedDate == Date.today()){
+                metrics.newTodayCases += 1;
+            }
+            if(caseObj.Email_Received__c){
+                metrics.overdueCases += 1;
+            }
+
+        }
         metrics.avgResponseTime = 2.4;
         metrics.resolutionRate = 95.0;
         return metrics;
     }
 
-    public class DashboardMetrics{
+    public class FilterWrapper {
+        @AuraEnabled public String assignmentGroup;
+        @AuraEnabled public String subGroup;
+        @AuraEnabled public String status;
+        @AuraEnabled public String priority;
+        @AuraEnabled public String tabContext;
+        @AuraEnabled public Integer pageNumber;
+    }
 
-        @AuraEnabled
-        public Integer totalCases;
-        @AuraEnabled
-        public Integer inProgressCases;
-        @AuraEnabled
-        public Integer newTodayCases;
-        @AuraEnabled
-        public Integer overdueCases;
-        @AuraEnabled
-        public Decimal avgResponseTime;
-        @AuraEnabled
-        public Decimal resolutionRate;
+
+    @AuraEnabled
+    public static CaseTableWrapper getCases(FilterWrapper request) {
+        CaseTableWrapper response = new CaseTableWrapper();
+        
+        // Define default pagination limits (matching UI layout roughly 10 per page)
+        Integer pageSize = 10;
+        Integer offset = (1 - 1) * pageSize;
+        
+        // Base SOQL statements
+        String baseQuery = 'SELECT Id, CaseNumber, Subject, Status, Priority, Owner.Name, CreatedDate FROM Case';
+        String countQuery = 'SELECT COUNT() FROM Case';
+        List<String> whereClauses = new List<String>();
+        
+        // 1. Contextual Tab Filtering Engine
+        if (request.tabContext == 'assigned') {
+            whereClauses.add('OwnerId = :UserInfo.getUserId()');
+        } else if (request.tabContext == 'progress') {
+            whereClauses.add('OwnerId = :UserInfo.getUserId() AND Status = \'In Progress\'');
+        } else if (request.tabContext == 'pending') {
+            whereClauses.add('Status = \'Pending\'');
+        }
+        
+        // 2. Dynamic Dropdown Combobox Filters (Safeguarded against blank options)
+        if (String.isNotBlank(request.status)) {
+            whereClauses.add('Status = \'' + String.escapeSingleQuotes(request.status) + '\'');
+        }
+        if (String.isNotBlank(request.priority)) {
+            whereClauses.add('Priority = \'' + String.escapeSingleQuotes(request.priority) + '\'');
+        }
+        if (String.isNotBlank(request.assignmentGroup)) {
+            // Assuming Assignment_Group__c exists, update with your actual API field name if different
+            whereClauses.add('Assignment_Group__c = \'' + String.escapeSingleQuotes(request.assignmentGroup) + '\'');
+        }
+
+        // Combine all WHERE filters systematically
+        String whereSegment = '';
+        if (!whereClauses.isEmpty()) {
+            whereSegment = ' WHERE ' + String.join(whereClauses, ' AND ');
+        }
+        
+        // Formulate final query tracking strings
+        String finalCountQuery = countQuery + whereSegment;
+        String finalDataQuery = baseQuery + whereSegment + ' ORDER BY CreatedDate DESC LIMIT :pageSize OFFSET :offset';
+        
+        // Execute dynamic queries safely
+        response.totalRecords = Database.countQuery(finalCountQuery);
+        response.cases = Database.query(finalDataQuery);
+        
+        return response;
+    }
+
+    // --- WRAPPER CLASSES ---
+
+    public class DashboardMetrics {
+        @AuraEnabled public Integer totalCases;
+        @AuraEnabled public Integer inProgressCases;
+        @AuraEnabled public Integer newTodayCases;
+        @AuraEnabled public Integer overdueCases;
+        @AuraEnabled public Decimal avgResponseTime;
+        @AuraEnabled public Decimal resolutionRate;
+    }
+
+    public class CaseTableWrapper {
+        @AuraEnabled public List<Case> cases;
+        @AuraEnabled public Integer totalRecords;
     }
 }
