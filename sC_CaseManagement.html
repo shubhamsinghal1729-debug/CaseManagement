@@ -58,7 +58,7 @@
                         </div>
                         <div class="metric-inner-divider"></div>
                         <div class="metric-card-body">
-                            <div class="metric-value-text">323</div>
+                            <div class="metric-value-text">{totalCases}</div>
                             <div class="metric-footer-trend trend-up">
                                 <span class="trend-icon-arrow">↑</span> +12% <span class="trend-duration-text">vs last week</span>
                             </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="metric-inner-divider"></div>
                         <div class="metric-card-body">
-                            <div class="metric-value-text">127</div>
+                            <div class="metric-value-text">{inProgressCases}</div>
                             <div class="metric-footer-trend trend-up">
                                 <span class="trend-icon-arrow">↑</span> +12% <span class="trend-duration-text">vs last week</span>
                             </div>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="metric-inner-divider"></div>
                         <div class="metric-card-body">
-                            <div class="metric-value-text">34</div>
+                            <div class="metric-value-text">{newTodayCases}</div>
                             <div class="metric-footer-trend trend-up">
                                 <span class="trend-icon-arrow">↑</span> +12% <span class="trend-duration-text">vs last week</span>
                             </div>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="metric-inner-divider"></div>
                         <div class="metric-card-body">
-                            <div class="metric-value-text text-color-danger">18</div>
+                            <div class="metric-value-text text-color-danger">{overdueCases}</div>
                             <div class="metric-footer-trend trend-down">
                                 <span class="trend-icon-arrow">↓</span> -3% <span class="trend-duration-text">vs last week</span>
                             </div>
@@ -122,7 +122,7 @@
                         </div>
                         <div class="metric-inner-divider"></div>
                         <div class="metric-card-body">
-                            <div class="metric-value-text">2.4h</div>
+                            <div class="metric-value-text">{avgResponseTime}</div>
                             <div class="metric-footer-trend trend-down">
                                 <span class="trend-icon-arrow">↓</span> -12% <span class="trend-duration-text">vs last week</span>
                             </div>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="metric-inner-divider"></div>
                         <div class="metric-card-body">
-                            <div class="metric-value-text">95%</div>
+                            <div class="metric-value-text">{resolutionRate}</div>
                             <div class="metric-footer-trend trend-down">
                                 <span class="trend-icon-arrow">↓</span> -12% <span class="trend-duration-text">vs last week</span>
                             </div>
@@ -208,13 +208,20 @@
             </div>
 
             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12 workspace-main-container">
-                
+                <!--
                 <div class="slds-grid tab-navigation-bar slds-m-bottom_medium">
                     <span class="navigation-tab custom-active-tab">All Cases</span>
                     <span class="navigation-tab">Assigned to Me</span>
                     <span class="navigation-tab">My In Progress</span>
                     <span class="navigation-tab">Pending My Response</span>
                     <span class="navigation-tab">Recently Touched</span>
+                </div> -->
+                <div class="slds-grid tab-navigation-bar slds-m-bottom_medium">
+                    <span class={allCasesClass} data-tab="all" onclick={handleTabClick}>All Cases</span>
+                    <span class={assignedClass} data-tab="assigned" onclick={handleTabClick}>Assigned to Me</span>
+                    <span class={inProgressClass} data-tab="progress" onclick={handleTabClick}>My In Progress</span>
+                    <span class={pendingClass} data-tab="pending" onclick={handleTabClick}>Pending My Response</span>
+                    <span class={recentlyTouchedClass} data-tab="touched" onclick={handleTabClick}>Recently Touched</span>
                 </div>
 
                 <div class="filter-panel-card slds-m-bottom_medium">
@@ -279,70 +286,26 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="datatable-frame-wrapper">
-                    <div class="datatable-section-title slds-m-bottom_medium">All Cases</div>
-                    
-                    <div class="slds-table_header-fixed_container custom-table-scroll-wrap">
-                        <table class="slds-table slds-table_bordered slds-table_cell-buffer custom-structured-table">
-                            <thead>
-                                <tr class="slds-line-height_reset">
-                                    <th scope="col" style="width: 3.25rem;"><div class="slds-truncate"><input type="checkbox"/></div></th>
-                                    <th scope="col"><div class="slds-truncate">Case Number <span class="sort-icon-indicator">↓</span></div></th>
-                                    <th scope="col"><div class="slds-truncate">Subject</div></th>
-                                    <th scope="col"><div class="slds-truncate">Status</div></th>
-                                    <th scope="col"><div class="slds-truncate">Priority</div></th>
-                                    <th scope="col"><div class="slds-truncate">Category</div></th>
-                                    <th scope="col"><div class="slds-truncate">Type</div></th>
-                                    <th scope="col"><div class="slds-truncate">Agent</div></th>
-                                    <th scope="col"><div class="slds-truncate">Assignment Group</div></th>
-                                    <th scope="col"><div class="slds-truncate">Sub-Group</div></th>
-                                    <th scope="col"><div class="slds-truncate">SLA Risk</div></th>
-                                    <th scope="col"><div class="slds-truncate">Date Opened</div></th>
-                                    <th scope="col" style="width: 3.25rem;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="slds-hint-parent">
-                                    <td><input type="checkbox"/></td>
-                                    <td><a href="javascript:void(0);" class="case-hyperlink-text">123450</a></td>
-                                    <td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td>
-                                    <td><span class="custom-status-label-badge">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td><span class="cell-standard-text">Label</span></td>
-                                    <td>
-                                        <lightning-button-icon icon-name="utility:down" variant="bare" alternative-text="Actions" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon>
-                                    </td>
-                                </tr>
-                                <tr class="slds-hint-parent"><td><input type="checkbox"/></td><td><a href="javascript:void(0);" class="case-hyperlink-text">123451</a></td><td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td><td><span class="custom-status-label-badge">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><lightning-button-icon icon-name="utility:down" variant="bare" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon></td></tr>
-                                <tr class="slds-hint-parent"><td><input type="checkbox"/></td><td><a href="javascript:void(0);" class="case-hyperlink-text">123452</a></td><td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td><td><span class="custom-status-label-badge">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><lightning-button-icon icon-name="utility:down" variant="bare" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon></td></tr>
-                                <tr class="slds-hint-parent"><td><input type="checkbox"/></td><td><a href="javascript:void(0);" class="case-hyperlink-text">123453</a></td><td><div class="slds-truncate text-lorem-dimmed">Lorem ips...</div></td><td><span class="custom-status-label-badge">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><span class="cell-standard-text">Label</span></td><td><lightning-button-icon icon-name="utility:down" variant="bare" size="x-small" class="table-row-dropdown-icon"></lightning-button-icon></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center custom-table-pagination-footer slds-p-vertical_small">
-                        <div class="results-counter-txt">Showing 1-10 out of 323</div>
-                        <div class="slds-grid pagination-numeric-cluster">
-                            <span class="page-step-action-text text-disabled-nav">Previous</span>
-                            <span class="num-block current-active-num">1</span>
-                            <span class="num-block">2</span>
-                            <span class="num-block">3</span>
-                            <span class="num-block">4</span>
-                            <span class="num-block">5</span>
-                            <span class="ellipsis-separator">...</span>
-                            <span class="num-block">33</span>
-                            <span class="page-step-action-text text-active-nav">Next</span>
+                <lightning-card title="All Cases" icon-name="standard:case">
+                    <div class="slds-p-around_medium">
+                        <div style="height: 300px;">
+                            <lightning-datatable 
+                                key-field="id"
+                                data={cases}
+                                columns={columns}
+                            >
+                            </lightning-datatable>
                         </div>
                     </div>
-
-                </div>
+                    <div slot="footer" class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <div class="slds-text-color_weak">Showing 1-4 out of 323</div>
+                        <div class="slds-grid">
+                            <button class="slds-button slds-button_neutral" disabled>Previous</button>
+                            <button class="slds-button slds-button_brand slds-m-horizontal_x-small">1</button>
+                            <button class="slds-button slds-button_neutral">Next</button>
+                        </div>
+                    </div>
+                </lightning-card>               
             </div>
         </div>
     </div>
